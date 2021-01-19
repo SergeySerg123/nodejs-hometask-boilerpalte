@@ -6,29 +6,64 @@ const { responseMiddleware } = require('../middlewares/response.middleware');
 const router = Router();
 
 router.get('users', (req, res, next) => {
-
-});
+    try {
+        const users = UserService.getUsers();
+        res.data = users;
+    } catch (err) {
+        res.err = err;
+    } finally {
+        next();
+    }
+}, responseMiddleware);
 
 router.get('users/:id', (req, res, next) => {
-
+    try {
+        const id = req.params.id;
+        const user = UserService.getUserById(id);
+        res.data = user;
+    } catch (err) {
+        res.err = err;
+    } finally {
+        next();
+    }  
 });
 
 router.post('users', (req, res, next) => {
-    const newUser = req.body;
-
-    const item = UserService.createNewUser(newUser);
-
-    if (item !== null) {
-        
+    try {
+        const newUser = req.body;
+        const user = UserService.createNewUser(newUser);
+        res.data = user;
+    } catch (err) {
+        res.err = err;
+    } finally {
+        next();
     }
-});
+}, responseMiddleware);
 
 router.put('users/:id', (req, res, next) => {
-
-});
+    try {
+        const id = req.params.id;
+        const user = req.body;
+    
+        const result = UserService.updateUser(id, user);
+        res.data = result; 
+    } catch (err) {
+        res.err = err;
+    } finally {
+        next();
+    }  
+}, responseMiddleware);
 
 router.delete('users/:id', (req, res, next) => {
-
-});
+    try {
+        const id = req.params.id;
+        const result = UserService.deleteById(id);
+        res.data = result;
+    } catch (err) {
+        res.err = err;
+    } finally {
+        next();
+    } 
+}, responseMiddleware);
 
 module.exports = router;
