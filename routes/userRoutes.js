@@ -31,7 +31,7 @@ router.get('users/:id', (req, res, next) => {
 router.post('users', (req, res, next) => {
     try {
         const newUser = req.body;
-        const user = UserService.createNewUser(newUser);
+        const user = UserService.createUser(newUser);
         res.data = user;
     } catch (err) {
         res.err = err;
@@ -57,7 +57,7 @@ router.put('users/:id', (req, res, next) => {
 router.delete('users/:id', (req, res, next) => {
     try {
         const id = req.params.id;
-        const result = UserService.deleteById(id);
+        const result = UserService.deleteUserById(id);
         res.data = result;
     } catch (err) {
         res.err = err;
