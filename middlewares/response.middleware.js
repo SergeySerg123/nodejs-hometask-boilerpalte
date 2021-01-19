@@ -5,6 +5,9 @@ const responseMiddleware = (req, res, next) => {
         res.status(status).send({message, error});
     } 
 
+    const data = res.data;
+    res.send(data);
+
     next();
 }
 
