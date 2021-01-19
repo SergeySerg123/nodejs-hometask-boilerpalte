@@ -5,6 +5,30 @@ const { responseMiddleware } = require('../middlewares/response.middleware');
 
 const router = Router();
 
-// TODO: Implement route controllers for user
+router.get('users', (req, res, next) => {
+
+});
+
+router.get('users/:id', (req, res, next) => {
+
+});
+
+router.post('users', (req, res, next) => {
+    const newUser = req.body;
+
+    const item = UserService.createNewUser(newUser);
+
+    if (item !== null) {
+        
+    }
+});
+
+router.put('users/:id', (req, res, next) => {
+
+});
+
+router.delete('users/:id', (req, res, next) => {
+
+});
 
 module.exports = router;
