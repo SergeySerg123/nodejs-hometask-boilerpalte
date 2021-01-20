@@ -54,8 +54,6 @@ router.put('users/:id', (req, res, next) => {
     }  
 }, responseMiddleware);
 
-
-// TODO status 204
 router.delete('users/:id', (req, res, next) => {
     try {
         const id = req.params.id;

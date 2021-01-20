@@ -1,6 +1,6 @@
 const throwCustomError = require('../helpers/CustomError');
 const { UserRepository } = require('../repositories/userRepository');
-const errors = require('../constants/statusCodes');
+const statusCodes = require('../constants/statusCodes');
 
 class UserService {
     // To think about ERROR
@@ -8,7 +8,7 @@ class UserService {
         const users = UserRepository.getAll();
 
         if(!users) {
-            throwCustomError('No users.', errors.NOT_FOUND);
+            throwCustomError('No users.', statusCodes.NOT_FOUND);
         }
         return users;
     }
@@ -16,7 +16,7 @@ class UserService {
     getUser(id) {
         const user = UserRepository.getUserById(user);
         if(!user) {
-            throwCustomError(`User not found.`, errors.NOT_FOUND);
+            throwCustomError(`User not found.`, statusCodes.NOT_FOUND);
         }
         return user;
     }
@@ -24,7 +24,7 @@ class UserService {
     createUser(userData) {
         const user = UserRepository.create(userData);
         if (!user) {
-            throwCustomError(`Could not create a new user.`, errors.BAD_REQUEST);
+            throwCustomError(`Could not create a new user.`, statusCodes.BAD_REQUEST);
         }
         return user;
     }
@@ -32,7 +32,7 @@ class UserService {
     updateUser(id, user) {
         const updatedUser = UserRepository.update(id, user);
         if(!updatedUser) {
-            throwCustomError(`Could not update the user.`, errors.BAD_REQUEST);
+            throwCustomError(`Could not update the user.`, statusCodes.BAD_REQUEST);
         }
         return updatedUser;
     }
@@ -40,7 +40,7 @@ class UserService {
     deleteUserById(id) {
         const deletedUser = UserRepository.delete(id);
         if(!deletedUser) {
-            throwCustomError(`Could not delete the user.`, errors.BAD_REQUEST);
+            throwCustomError(`Could not delete the user.`, statusCodes.BAD_REQUEST);
         }
     }
 
