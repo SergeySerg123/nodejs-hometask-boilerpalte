@@ -30,8 +30,8 @@ router.get('users/:id', (req, res, next) => {
 
 router.post('users', (req, res, next) => {
     try {
-        const newUser = req.body;
-        const user = UserService.createUser(newUser);
+        const userData = req.body;
+        const user = UserService.createUser(userData);
         res.data = user;
     } catch (err) {
         res.err = err;
@@ -54,11 +54,12 @@ router.put('users/:id', (req, res, next) => {
     }  
 }, responseMiddleware);
 
+
+// TODO status 204
 router.delete('users/:id', (req, res, next) => {
     try {
         const id = req.params.id;
-        const result = UserService.deleteUserById(id);
-        res.data = result;
+        UserService.deleteUserById(id);
     } catch (err) {
         res.err = err;
     } finally {

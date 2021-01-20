@@ -3,9 +3,9 @@ const { UserRepository } = require('../repositories/userRepository');
 const errors = require('../constants/statusCodes');
 
 class UserService {
-
+    // To think about ERROR
     getUsers() {
-        const users = UserRepository.getUsers();
+        const users = UserRepository.getAll();
 
         if(!users) {
             throwCustomError('No users.', errors.NOT_FOUND);
@@ -13,10 +13,10 @@ class UserService {
         return users;
     }
     
-    getUserById(id) {
-        const user = UserRepository.getUserById(id);
+    getUser(id) {
+        const user = UserRepository.getUserById(user);
         if(!user) {
-            throwCustomError(`User with id ${id} not found.`, errors.NOT_FOUND);
+            throwCustomError(`User not found.`, errors.NOT_FOUND);
         }
         return user;
     }
@@ -30,33 +30,21 @@ class UserService {
     }
 
     updateUser(id, user) {
-        const oldUser = UserRepository.getUserById(id);
-        if(!oldUser) {
-            throwCustomError(`User with id ${id} not found.`, errors.NOT_FOUND);
+        const updatedUser = UserRepository.update(id, user);
+        if(!updatedUser) {
+            throwCustomError(`Could not update the user.`, errors.BAD_REQUEST);
         }
-
-        oldUser.firstName = user.firstName;
-        oldUser.lastName = user.lastName;
-        oldUser.email = user.email;
-        oldUser.phoneNumber = user.phoneNumber;
-
-        const updatedUser = UserRepository.updateUser(oldUser);
-
-        if (!updatedUser) {
-            throwCustomError(`Could not update a old user with id ${id}.`, errors.BAD_REQUEST);
-        }
-
-        return user;
+        return updatedUser;
     }
 
     deleteUserById(id) {
-        const result = UserRepository.deleteUserById(id);
-        if(!result) {
-            throwCustomError(`Could not delete a user with id ${id}.`, errors.BAD_REQUEST);
+        const deletedUser = UserRepository.delete(id);
+        if(!deletedUser) {
+            throwCustomError(`Could not delete the user.`, errors.BAD_REQUEST);
         }
-        return result;
     }
 
+    // TODO: replace method
     search(search) {
         const item = UserRepository.getOne(search);
         if(!item) {
