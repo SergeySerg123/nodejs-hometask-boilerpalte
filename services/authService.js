@@ -7,7 +7,7 @@ class AuthService {
         const user = UserService.createNewUser(userData);
         
         if(!user) {
-            throw throwCustomError('Could not create a new user', errors.BAD_REQUEST);
+            throwCustomError('Could not create a new user', errors.BAD_REQUEST);
         }
         return user;
     }

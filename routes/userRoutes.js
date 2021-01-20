@@ -1,11 +1,11 @@
 const { Router } = require('express');
 const UserService = require('../services/userService');
-const { createUserValid, createUserValidationRules, updateUserValid } = require('../middlewares/user.validation.middleware');
+const { createUserValid, createUservalidationRules, updateUserValid } = require('../middlewares/user.validation.middleware');
 const { responseMiddleware } = require('../middlewares/response.middleware');
 
 const router = Router();
 
-router.get('users', (req, res, next) => {
+router.get('', (req, res, next) => {
     try {
         const users = UserService.getUsers();
         res.data = users;
@@ -16,19 +16,19 @@ router.get('users', (req, res, next) => {
     }
 }, responseMiddleware);
 
-router.get('users/:id', (req, res, next) => {
+router.get('/:id', (req, res, next) => {
     try {
         const id = req.params.id;
-        const user = UserService.getUserById(id);
+        const user = UserService.getUser(id);
         res.data = user;
     } catch (err) {
         res.err = err;
     } finally {
         next();
     }  
-});
+}, responseMiddleware);
 
-router.post('users', createUserValidationRules(), createUserValid, (req, res, next) => {
+router.post('', createUservalidationRules(), createUserValid, (req, res, next) => {
     try {
         const userData = req.body;
         const user = UserService.createUser(userData);
@@ -40,7 +40,9 @@ router.post('users', createUserValidationRules(), createUserValid, (req, res, ne
     }
 }, responseMiddleware);
 
-router.put('users/:id', (req, res, next) => {
+
+// TODO: validation middleware
+router.put('/:id', (req, res, next) => {
     try {
         const id = req.params.id;
         const user = req.body;
@@ -54,7 +56,7 @@ router.put('users/:id', (req, res, next) => {
     }  
 }, responseMiddleware);
 
-router.delete('users/:id', (req, res, next) => {
+router.delete('/:id', (req, res, next) => {
     try {
         const id = req.params.id;
         UserService.deleteUserById(id);

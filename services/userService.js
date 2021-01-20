@@ -14,7 +14,7 @@ class UserService {
     }
     
     getUser(id) {
-        const user = UserRepository.getUserById(user);
+        const user = UserRepository.getUserById(id);
         if(!user) {
             throwCustomError(`User not found.`, statusCodes.NOT_FOUND);
         }
