@@ -6,7 +6,6 @@ class UserRepository extends BaseRepository {
     }
 
     getUserById(id) {
-        console.log(id);
         return this.dbContext.find({ id }).value();
     }
 }

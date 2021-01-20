@@ -3,7 +3,6 @@ const { UserRepository } = require('../repositories/userRepository');
 const statusCodes = require('../constants/statusCodes');
 
 class UserService {
-    // To think about ERROR
     getUsers() {
         const users = UserRepository.getAll();
 
