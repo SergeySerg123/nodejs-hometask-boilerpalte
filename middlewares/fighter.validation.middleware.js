@@ -1,24 +1,27 @@
 const { fighter } = require('../models/fighter');
-
-const createFighterValidationRules = () => {
-    return [];
-}
-
-const updateFighterValidationRules = () => {
-
-}
+const { validationResult } = require('express-validator');
+const {filterRequestBody} = require('../helpers/filterRequestBody');
+const {responseErrorsSender} = require('../helpers/responseErrorsSender');
 
 const createFighterValid = (req, res, next) => {
-    // TODO: Implement validatior for fighter entity during creation
-    next();
+    const errors = validationResult(req);
+    if (errors.isEmpty()) {
+        filterRequestBody(req, fighter);
+        return next();
+    }
+
+    responseErrorsSender(errors, res);
 }
 
 const updateFighterValid = (req, res, next) => {
-    // TODO: Implement validatior for fighter entity during update
-    next();
+    const errors = validationResult(req);
+    if (errors.isEmpty()) {
+        filterRequestBody(req);
+        return next();
+    }
+
+    responseErrorsSender(errors, res);
 }
 
 exports.createFighterValid = createFighterValid;
 exports.updateFighterValid = updateFighterValid;
-exports.createFighterValidationRules = createFighterValidationRules;
-exports.updateFighterValidationRules = updateFighterValidationRules;
