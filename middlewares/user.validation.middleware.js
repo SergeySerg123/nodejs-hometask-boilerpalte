@@ -12,10 +12,18 @@ const createUservalidationRules = () => {
     ];
 }
 
+const filterRequestBody = (req) => {
+    let targetObj = {}    
+    Object.keys(user).forEach((value) => {
+        targetObj[value] = req.body[value]
+    })
+    req.body = targetObj;
+}
+
 const createUserValid = (req, res, next) => {
     const errors = validationResult(req);
-
     if (errors.isEmpty()) {
+        filterRequestBody(req);
         return next();
     }
 
