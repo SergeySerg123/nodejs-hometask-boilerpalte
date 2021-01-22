@@ -5,5 +5,5 @@ const UNAUTHORIZED = 401;
 module.exports = {
     NOT_FOUND,
     BAD_REQUEST,
-    UNAUTHORIZED,
+    UNAUTHORIZED
 }

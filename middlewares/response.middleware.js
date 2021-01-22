@@ -1,5 +1,3 @@
-const statusCodes = require('../constants/statusCodes');
-
 const responseMiddleware = (req, res, next) => {
     if (res.err != undefined) {
         const {status, message, error} = res.err;

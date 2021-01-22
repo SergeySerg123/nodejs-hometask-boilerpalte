@@ -30,7 +30,12 @@ class FighterService {
     }
 
     updateFighter(id, fighter) {
+        const oldFighter = FighterRepository.getFighterById(id);
+        if(!oldFighter) {
+            throwCustomError(`fighter not found.`, statusCodes.NOT_FOUND);
+        }
         const updatedfighter = FighterRepository.update(id, fighter);
+
         if(!updatedfighter) {
             throwCustomError(`Could not update the fighter.`, statusCodes.BAD_REQUEST);
         }
@@ -38,6 +43,10 @@ class FighterService {
     }
 
     deleteFighterById(id) {
+        const oldFighter = FighterRepository.getFighterById(id);
+        if(!oldFighter) {
+            throwCustomError(`fighter not found.`, statusCodes.NOT_FOUND);
+        }
         const deletedfighter = FighterRepository.delete(id);
         if(!deletedfighter) {
             throwCustomError(`Could not delete the fighter.`, statusCodes.BAD_REQUEST);

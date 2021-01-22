@@ -16,7 +16,7 @@ const createUserValid = (req, res, next) => {
 const updateUserValid = (req, res, next) => {
     const errors = validationResult(req);
     if (errors.isEmpty()) {
-        filterRequestBody(req);
+        filterRequestBody(req, user);
         return next();
     }
 

@@ -47,7 +47,6 @@ router.put('/:id', fighterValidator(), updateFighterValid, (req, res, next) => {
     try {
         const id = req.params.id;
         const fighter = req.body;
-    
         const result = FighterService.updateFighter(id, fighter);
         res.data = result; 
     } catch (err) {

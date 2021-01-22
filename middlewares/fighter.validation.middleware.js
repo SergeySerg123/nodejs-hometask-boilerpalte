@@ -16,7 +16,7 @@ const createFighterValid = (req, res, next) => {
 const updateFighterValid = (req, res, next) => {
     const errors = validationResult(req);
     if (errors.isEmpty()) {
-        filterRequestBody(req);
+        filterRequestBody(req, fighter);
         return next();
     }
 

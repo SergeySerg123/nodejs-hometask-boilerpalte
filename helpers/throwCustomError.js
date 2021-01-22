@@ -11,4 +11,4 @@ class CustomError extends Error {
     }
 }
 
-module.exports = throwCustomError;
+exports.throwCustomError = throwCustomError;

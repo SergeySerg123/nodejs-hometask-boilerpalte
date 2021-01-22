@@ -29,6 +29,10 @@ class UserService {
     }
 
     updateUser(id, user) {
+        const oldUser = UserRepository.getUserById(id);
+        if(!oldUser) {
+            throwCustomError(`User not found.`, statusCodes.NOT_FOUND);
+        }
         const updatedUser = UserRepository.update(id, user);
         if(!updatedUser) {
             throwCustomError(`Could not update the user.`, statusCodes.BAD_REQUEST);
@@ -37,13 +41,16 @@ class UserService {
     }
 
     deleteUserById(id) {
+        const oldUser = UserRepository.getUserById(id);
+        if(!oldUser) {
+            throwCustomError(`User not found.`, statusCodes.NOT_FOUND);
+        }
         const deletedUser = UserRepository.delete(id);
         if(!deletedUser) {
             throwCustomError(`Could not delete the user.`, statusCodes.BAD_REQUEST);
         }
     }
 
-    // TODO: replace method
     search(search) {
         const item = UserRepository.getOne(search);
         if(!item) {
