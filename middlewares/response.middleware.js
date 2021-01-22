@@ -5,14 +5,8 @@ const responseMiddleware = (req, res, next) => {
         const {status, message, error} = res.err;
         return res.status(status).json({message, error});
     } 
-
     const data = res.data;
-    if (!data) {
-        res.status(statusCodes.NO_CONTENT).send();
-    } else {
-        res.send(data);
-    }
-    next();
+    return data === undefined ? res.send() : res.send(data);
 }
 
 exports.responseMiddleware = responseMiddleware;
