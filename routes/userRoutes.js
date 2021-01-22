@@ -1,6 +1,6 @@
 const { Router } = require('express');
 const UserService = require('../services/userService');
-const { createUserValid, createUservalidationRules, updateUserValid } = require('../middlewares/user.validation.middleware');
+const { createUserValid, validationRules, updateUserValid } = require('../middlewares/user.validation.middleware');
 const { responseMiddleware } = require('../middlewares/response.middleware');
 
 const router = Router();
@@ -28,7 +28,7 @@ router.get('/:id', (req, res, next) => {
     }  
 }, responseMiddleware);
 
-router.post('', createUservalidationRules(), createUserValid, (req, res, next) => {
+router.post('', validationRules(), createUserValid, (req, res, next) => {
     try {
         const userData = req.body;
         const user = UserService.createUser(userData);
@@ -42,7 +42,7 @@ router.post('', createUservalidationRules(), createUserValid, (req, res, next) =
 
 
 // TODO: validation middleware
-router.put('/:id', (req, res, next) => {
+router.put('/:id', validationRules(), updateUserValid, (req, res, next) => {
     try {
         const id = req.params.id;
         const user = req.body;
