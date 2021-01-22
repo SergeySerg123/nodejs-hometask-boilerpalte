@@ -1,4 +1,5 @@
 const { FighterRepository } = require('../repositories/FighterRepository');
+const { throwCustomError } = require('../helpers/throwCustomError');
 const statusCodes = require('../constants/statusCodes');
 
 class FighterService {

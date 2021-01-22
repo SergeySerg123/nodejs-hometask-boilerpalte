@@ -1,4 +1,4 @@
-const throwCustomError = require('../helpers/CustomError');
+const { throwCustomError } = require('../helpers/throwCustomError');
 const { UserRepository } = require('../repositories/userRepository');
 const statusCodes = require('../constants/statusCodes');
 
