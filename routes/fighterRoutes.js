@@ -1,7 +1,8 @@
 const { Router } = require('express');
 const FighterService = require('../services/fighterService');
 const { responseMiddleware } = require('../middlewares/response.middleware');
-const { createFighterValid, createFighterValidationRules, updateFighterValidationRules, updateFighterValid } = require('../middlewares/fighter.validation.middleware');
+const { createFighterValid, updateFighterValid } = require('../middlewares/fighter.validation.middleware');
+const { fighterValidator } = require('../validators/fighter.validator');
 
 const router = Router();
 
@@ -29,7 +30,7 @@ router.get('/:id', (req, res, next) => {
 }, responseMiddleware);
 
 //TODO: middlewares implementation
-router.post('', createFighterValidationRules(), createFighterValid, (req, res, next) => {
+router.post('', fighterValidator(), createFighterValid, (req, res, next) => {
     try {
         const fighterData = req.body;
         const fighter = FighterService.createFighter(fighterData);
@@ -42,8 +43,7 @@ router.post('', createFighterValidationRules(), createFighterValid, (req, res, n
 }, responseMiddleware);
 
 
-// TODO: validation middleware
-router.put('/:id', (req, res, next) => {
+router.put('/:id', fighterValidator(), updateFighterValid, (req, res, next) => {
     try {
         const id = req.params.id;
         const fighter = req.body;
