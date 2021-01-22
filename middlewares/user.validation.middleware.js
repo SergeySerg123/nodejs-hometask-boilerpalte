@@ -2,7 +2,7 @@ const statusCodes = require('../constants/statusCodes');
 const { user } = require('../models/user');
 const { body, validationResult } = require('express-validator')
 
-const createUservalidationRules = () => {
+const validationRules = () => {
     return [
         body('firstName').notEmpty().withMessage('FirstName is required.'),
         body('lastName').notEmpty().withMessage('LastName is required.'),
@@ -15,7 +15,9 @@ const createUservalidationRules = () => {
 const filterRequestBody = (req) => {
     let targetObj = {}    
     Object.keys(user).forEach((value) => {
-        targetObj[value] = req.body[value]
+        if (value !== 'id') {
+            targetObj[value] = req.body[value]
+        }       
     })
     req.body = targetObj;
 }
@@ -36,11 +38,20 @@ const createUserValid = (req, res, next) => {
 }
 
 const updateUserValid = (req, res, next) => {
-    // TODO: Implement validatior for user entity during update
+    const errors = validationResult(req);
+    if (errors.isEmpty()) {
+        filterRequestBody(req);
+        return next();
+    }
 
-    next();
+    const extractedErrors = [];
+    errors.array().map(err => extractedErrors.push({ [err.param]: err.msg }));
+
+    return res.status(statusCodes.BAD_REQUEST).json({
+        errors: extractedErrors
+    });
 }
 
 exports.createUserValid = createUserValid;
 exports.updateUserValid = updateUserValid;
-exports.createUservalidationRules = createUservalidationRules;
+exports.validationRules = validationRules;
